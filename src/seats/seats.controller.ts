@@ -1,20 +1,22 @@
-import { Controller, Get, Post, Put, Res } from '@nestjs/common';
+import { Controller, Get, HttpStatus, Param, Post, Put, Res } from '@nestjs/common';
 import { Response } from 'express';
 import { SeatsService } from './seats.service';
-import { Seat } from './seats.interface'; // TODO
 
 @Controller('api/v1/seats')
 export class SeatsController {
 
     constructor(private readonly seatsService: SeatsService) {}
     
-    @Get()
-    findAll(@Res() res:Response): void {
-        // Logic to retrieve and return seats data
-        const seats = this.seatsService.findAll()
-        
-        // Return seats data as JSON response
-        res.json(seats);
+    @Get(':id')
+    async findAll(@Param('id') trip_id:number, @Res() res:Response): Promise<void> {
+        try {
+            const seats = await this.seatsService.findAll(trip_id);
+
+            // Return seats data as JSON response
+            res.status(HttpStatus.OK).json({data: seats});
+        } catch (error) {
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: 'An error occurred while fetching seats data' });
+        }
     }
 
     @Post()

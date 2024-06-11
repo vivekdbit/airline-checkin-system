@@ -11,6 +11,6 @@ export const typeOrmConfig = async (configService: ConfigService): Promise<TypeO
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_DATABASE'),
         entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-        synchronize: true, // Set to true for development, false for production
+        synchronize: false, // Set to true for development, false for production
     };
 };

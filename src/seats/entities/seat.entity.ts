@@ -1,13 +1,27 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
-export class Seat {
+export class Seats {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    seatNumber: string;
+    @Column({
+        length: 4
+    })
+    seat_number: string;
 
-    @Column({ default: false })
-    occupied: boolean;
+    @Column()
+    trip_id: number;
+
+    @Column()
+    user_id: number;
+
+    @UpdateDateColumn()
+    booked_at: Date;
+
+    @CreateDateColumn()
+    created_at: Date;
+        
+    @UpdateDateColumn()
+    updated_at: Date;
 }

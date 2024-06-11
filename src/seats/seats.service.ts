@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Seat } from './entities/seat.entity';
+import { Seats } from './entities/seat.entity';
 
 @Injectable()
 export class SeatsService {
     constructor(
-    @InjectRepository(Seat)
-        private readonly seatRepository: Repository<Seat>,
+    @InjectRepository(Seats)
+        private readonly seatRepository: Repository<Seats>,
     ) {}
 
-    async findAll(): Promise<Seat[]> {
-        return await this.seatRepository.find();
+    async findAll(trip_id: number): Promise<Seats[]> {
+        return await this.seatRepository.find({ where: { trip_id } });
     }
 
     // async findOne(id: number): Promise<Seat> {
